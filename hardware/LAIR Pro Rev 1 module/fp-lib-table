@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name RC2014)(type KiCad)(uri "/Users/kb5mu/Dropbox/Projects/RC2014/Logic Analyzer Interface Board/hardware/LAIR Pro/RC2014.pretty")(options "")(descr ""))
+  (lib (name Graphics)(type KiCad)(uri "/Users/kb5mu/Dropbox/Projects/RC2014/Logic Analyzer Interface Board/hardware/LAIR Pro/graphics.pretty")(options "")(descr ""))
+)

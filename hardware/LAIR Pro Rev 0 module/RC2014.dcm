@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP RC2014_Pro_Bus
+D Bus connector for RC2014 retro computer
+K connector
+F ~
+$ENDCMP
+#
+#End Doc Library
