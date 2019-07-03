@@ -6,7 +6,7 @@ $Descr USLetter 11000 8500
 encoding utf-8
 Sheet 1 1
 Title "LAIR-Pro Logic Analyzer Interface for RC2014 Pro Bus"
-Date "2019-06-21"
+Date "2019-07-03"
 Rev "Rev1"
 Comp "Must Be Art"
 Comment1 "Paul Williamson paul@mustbeart.com"
@@ -409,10 +409,6 @@ Text Label 9650 3250 2    50   ~ 0
 D13
 Text Label 9650 3150 2    50   ~ 0
 D15
-Text Label 7550 1150 2    50   ~ 0
-K_CLK
-Wire Wire Line
-	7550 1150 7250 1150
 Text Label 6500 3050 0    50   ~ 0
 XRFSH
 Text Label 6650 2950 0    50   ~ 0
@@ -735,7 +731,6 @@ Wire Wire Line
 Wire Wire Line
 	9700 1550 9450 1550
 NoConn ~ 9450 2650
-NoConn ~ 8950 2750
 Text Label 8800 3150 0    50   ~ 0
 RX
 Text Label 8800 3050 0    50   ~ 0
@@ -868,14 +863,9 @@ Text Label 6600 3150 0    50   ~ 0
 XWR
 Text Notes 1650 7900 0    50   ~ 0
 As specified for STAT symbol used by Z80 inverse assembler
-NoConn ~ 6750 2750
 NoConn ~ 7250 2650
-Text Label 9700 1150 2    50   ~ 0
-CLOCK
 Text Label 8700 1250 0    50   ~ 0
 XRFSH
-Wire Wire Line
-	9450 1150 9700 1150
 Wire Wire Line
 	8950 2950 8800 2950
 Wire Wire Line
@@ -925,8 +915,8 @@ Wire Wire Line
 	7250 2850 7450 2850
 Wire Wire Line
 	7250 3050 7475 3050
-Text Notes 6500 4250 0    50   ~ 0
-Note: Pin 1 of each pod has +5V from the pod and must remain unconnected.
+Text Notes 6500 4300 0    50   ~ 0
+Note: Pin 1 of each pod has +5V from the pod and must remain unconnected.\n      Pin 2 of each pod is reserved for a second clock, not used on actual pods.
 $Comp
 L 74xx:74LS240 U1
 U 1 1 5D18AAA5
@@ -1355,8 +1345,18 @@ Wire Wire Line
 	3300 2600 3800 2600
 Wire Wire Line
 	3350 2700 3800 2700
-Text Notes 9800 1150 0    50   ~ 0
+Text Notes 8350 2750 0    50   ~ 0
 M_CLK
 Text Notes 8600 1250 2    50   ~ 0
 L_CLK
+Text Label 8650 2750 0    50   ~ 0
+CLOCK
+Wire Wire Line
+	8650 2750 8950 2750
+NoConn ~ 9450 1150
+Text Label 6500 2750 0    50   ~ 0
+K_CLK
+Wire Wire Line
+	6750 2750 6500 2750
+NoConn ~ 7250 1150
 $EndSCHEMATC
