@@ -341,8 +341,6 @@ Text Label 6600 1450 0    50   ~ 0
 A12
 Text Label 6600 1350 0    50   ~ 0
 A14
-Text Label 6500 1250 0    50   ~ 0
-J_CLK
 Wire Wire Line
 	6500 1250 6750 1250
 Wire Wire Line
@@ -409,14 +407,14 @@ Text Label 9650 3250 2    50   ~ 0
 D13
 Text Label 9650 3150 2    50   ~ 0
 D15
-Text Label 6500 3050 0    50   ~ 0
-XRFSH
+Text Label 6550 3050 0    50   ~ 0
+RFSH
 Text Label 6650 2950 0    50   ~ 0
 RD
 Text Label 7475 3050 2    50   ~ 0
 XIORQ
-Text Label 7400 2950 2    50   ~ 0
-XM1
+Text Label 7350 2950 2    50   ~ 0
+M1
 Text Label 7450 2850 2    50   ~ 0
 MREQ
 Text Label 6650 2850 0    50   ~ 0
@@ -828,19 +826,6 @@ Wire Wire Line
 	8700 4900 8250 4900
 Text Notes 8800 5650 2    75   ~ 15
 SPARE CHANNEL PASS-THRU
-$Comp
-L Device:C C1
-U 1 1 5D7D114E
-P 5200 7250
-F 0 "C1" H 5315 7296 50  0000 L CNN
-F 1 "100nF" H 5315 7205 50  0000 L CNN
-F 2 "Capacitor_THT:C_Rect_L4.0mm_W2.5mm_P2.50mm" H 5238 7100 50  0001 C CNN
-F 3 "~" H 5200 7250 50  0001 C CNN
-	1    5200 7250
-	1    0    0    -1  
-$EndComp
-Text Notes 1625 7775 0    75   ~ 15
-TIMING DELAY FOR TRACING BUS CYCLES
 Wire Wire Line
 	6650 2950 6750 2950
 Wire Wire Line
@@ -861,11 +846,11 @@ Wire Wire Line
 	7250 3450 7350 3450
 Text Label 6600 3150 0    50   ~ 0
 XWR
-Text Notes 1650 7900 0    50   ~ 0
-As specified for STAT symbol used by Z80 inverse assembler
+Text Notes 5200 6550 0    50   ~ 0
+The STAT label used by HP inverse assembler consists of M1, RFSH, XIORQ, XWR. \n\nThe HP Z80 adapter inverts MREQ and IORQ, used as clocks for bus cycles.\nWe do not invert MREQ and IORQ, so configure analyzer for rising edge J and K clocks.\n\nThe HP Z80 adapter buffers every signal. IORQ is inverted twice to make XIORQ, and WR is\ninverted three times to make XWR. We don’t buffer everything, so we buffer IORQ only once\nand WR twice, keeping the inversion of WR for compatibility.
 NoConn ~ 7250 2650
 Text Label 8700 1250 0    50   ~ 0
-XRFSH
+RFSH
 Wire Wire Line
 	8950 2950 8800 2950
 Wire Wire Line
@@ -917,66 +902,6 @@ Wire Wire Line
 	7250 3050 7475 3050
 Text Notes 6500 4300 0    50   ~ 0
 Note: Pin 1 of each pod has +5V from the pod and must remain unconnected.\n      Pin 2 of each pod is reserved for a second clock, not used on actual pods.
-$Comp
-L 74xx:74LS240 U1
-U 1 1 5D18AAA5
-P 1800 6600
-F 0 "U1" H 1600 7300 50  0000 C CNN
-F 1 "74LS240" H 2100 7300 50  0000 C CNN
-F 2 "Package_DIP:DIP-20_W7.62mm_Socket" H 1800 6600 50  0001 C CNN
-F 3 "http://www.ti.com/lit/gpn/sn74LS240" H 1800 6600 50  0001 C CNN
-	1    1800 6600
-	1    0    0    -1  
-$EndComp
-$Comp
-L 74xx:74LS244 U2
-U 1 1 5D18E79C
-P 3950 6600
-F 0 "U2" H 3750 7300 50  0000 C CNN
-F 1 "74LS244" H 4250 7300 50  0000 C CNN
-F 2 "Package_DIP:DIP-20_W7.62mm_Socket" H 3950 6600 50  0001 C CNN
-F 3 "http://www.ti.com/lit/gpn/sn74LS244" H 3950 6600 50  0001 C CNN
-	1    3950 6600
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3450 7000 3450 7100
-Wire Wire Line
-	3450 7400 3950 7400
-Connection ~ 3450 7100
-Wire Wire Line
-	3450 7100 3450 7400
-Wire Wire Line
-	1300 7000 1300 7100
-Wire Wire Line
-	1300 7400 1800 7400
-Connection ~ 1300 7100
-Wire Wire Line
-	1300 7100 1300 7400
-$Comp
-L power:GND #PWR010
-U 1 1 5D1F81E2
-P 3950 7400
-F 0 "#PWR010" H 3950 7150 50  0001 C CNN
-F 1 "GND" H 3955 7227 50  0000 C CNN
-F 2 "" H 3950 7400 50  0001 C CNN
-F 3 "" H 3950 7400 50  0001 C CNN
-	1    3950 7400
-	1    0    0    -1  
-$EndComp
-Connection ~ 3950 7400
-$Comp
-L power:GND #PWR04
-U 1 1 5D1F9234
-P 1800 7400
-F 0 "#PWR04" H 1800 7150 50  0001 C CNN
-F 1 "GND" H 1805 7227 50  0000 C CNN
-F 2 "" H 1800 7400 50  0001 C CNN
-F 3 "" H 1800 7400 50  0001 C CNN
-	1    1800 7400
-	1    0    0    -1  
-$EndComp
-Connection ~ 1800 7400
 $Comp
 L power:GND #PWR017
 U 1 1 5D1F9CE4
@@ -1129,180 +1054,6 @@ Wire Wire Line
 	3350 2700 3350 2500
 Wire Wire Line
 	850  2700 850  2500
-$Comp
-L power:VCC #PWR03
-U 1 1 5D317ECF
-P 1800 5800
-F 0 "#PWR03" H 1800 5650 50  0001 C CNN
-F 1 "VCC" H 1817 5973 50  0000 C CNN
-F 2 "" H 1800 5800 50  0001 C CNN
-F 3 "" H 1800 5800 50  0001 C CNN
-	1    1800 5800
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:VCC #PWR09
-U 1 1 5D318CE5
-P 3950 5800
-F 0 "#PWR09" H 3950 5650 50  0001 C CNN
-F 1 "VCC" H 3967 5973 50  0000 C CNN
-F 2 "" H 3950 5800 50  0001 C CNN
-F 3 "" H 3950 5800 50  0001 C CNN
-	1    3950 5800
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	2300 6100 2300 5550
-Wire Wire Line
-	2300 5550 1200 5550
-Wire Wire Line
-	1200 5550 1200 6200
-Wire Wire Line
-	1200 6200 1300 6200
-Wire Wire Line
-	2300 6200 2400 6200
-Wire Wire Line
-	2400 6200 2400 5450
-Wire Wire Line
-	1100 5450 1100 6300
-Wire Wire Line
-	1100 6300 1300 6300
-Wire Wire Line
-	2400 5450 1100 5450
-Wire Wire Line
-	2300 6400 2500 6400
-Wire Wire Line
-	2500 6400 2500 5350
-Wire Wire Line
-	2500 5350 1000 5350
-Text Label 800  6100 0    50   ~ 0
-WR
-Text Label 700  6400 0    50   ~ 0
-IORQ
-Wire Wire Line
-	1000 6500 1300 6500
-Wire Wire Line
-	1000 5350 1000 6500
-Text Label 2850 6400 2    50   ~ 0
-K_CLK
-Text Label 2850 6500 2    50   ~ 0
-XIORQ
-Wire Wire Line
-	2850 6400 2500 6400
-Connection ~ 2500 6400
-Wire Wire Line
-	2300 6500 2850 6500
-Wire Wire Line
-	700  6400 1300 6400
-Wire Wire Line
-	800  6100 1300 6100
-Text Label 2850 6600 2    50   ~ 0
-J_CLK
-Text Label 1000 6600 0    50   ~ 0
-MREQ
-Wire Wire Line
-	1000 6600 1300 6600
-Wire Wire Line
-	2300 6600 2850 6600
-Text Label 2850 6300 2    50   ~ 0
-XWR
-Wire Wire Line
-	2850 6300 2300 6300
-Wire Wire Line
-	1300 6700 1300 6800
-Connection ~ 1300 7000
-Connection ~ 1300 6800
-Wire Wire Line
-	1300 6800 1300 7000
-Text Label 3150 6100 0    50   ~ 0
-RFSH
-Text Label 4750 6100 2    50   ~ 0
-XRFSH
-Text Label 4750 6200 2    50   ~ 0
-XM1
-Text Label 3150 6200 0    50   ~ 0
-M1
-Wire Wire Line
-	3150 6100 3450 6100
-Wire Wire Line
-	3150 6200 3450 6200
-Wire Wire Line
-	4450 6100 4750 6100
-Wire Wire Line
-	4450 6200 4750 6200
-Wire Wire Line
-	3450 6300 3450 6400
-Connection ~ 3450 7000
-Connection ~ 3450 6400
-Wire Wire Line
-	3450 6400 3450 6500
-Connection ~ 3450 6500
-Wire Wire Line
-	3450 6500 3450 6600
-Connection ~ 3450 6600
-Wire Wire Line
-	3450 6600 3450 6700
-Connection ~ 3450 6700
-Wire Wire Line
-	3450 6700 3450 6800
-Connection ~ 3450 6800
-Wire Wire Line
-	3450 6800 3450 7000
-Wire Wire Line
-	7250 2950 7400 2950
-Wire Wire Line
-	6500 3050 6750 3050
-NoConn ~ 2300 6700
-NoConn ~ 2300 6800
-NoConn ~ 4450 6300
-NoConn ~ 4450 6400
-NoConn ~ 4450 6500
-NoConn ~ 4450 6600
-NoConn ~ 4450 6700
-NoConn ~ 4450 6800
-$Comp
-L Device:C C2
-U 1 1 5D7666C0
-P 5750 7250
-F 0 "C2" H 5865 7296 50  0000 L CNN
-F 1 "100nF" H 5865 7205 50  0000 L CNN
-F 2 "Capacitor_THT:C_Rect_L4.0mm_W2.5mm_P2.50mm" H 5788 7100 50  0001 C CNN
-F 3 "~" H 5750 7250 50  0001 C CNN
-	1    5750 7250
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	5200 7100 5450 7100
-Wire Wire Line
-	5200 7400 5450 7400
-$Comp
-L power:VCC #PWR012
-U 1 1 5D79D39A
-P 5450 7100
-F 0 "#PWR012" H 5450 6950 50  0001 C CNN
-F 1 "VCC" H 5467 7273 50  0000 C CNN
-F 2 "" H 5450 7100 50  0001 C CNN
-F 3 "" H 5450 7100 50  0001 C CNN
-	1    5450 7100
-	1    0    0    -1  
-$EndComp
-Connection ~ 5450 7100
-Wire Wire Line
-	5450 7100 5750 7100
-$Comp
-L power:GND #PWR013
-U 1 1 5D79DFA9
-P 5450 7400
-F 0 "#PWR013" H 5450 7150 50  0001 C CNN
-F 1 "GND" H 5455 7227 50  0000 C CNN
-F 2 "" H 5450 7400 50  0001 C CNN
-F 3 "" H 5450 7400 50  0001 C CNN
-	1    5450 7400
-	1    0    0    -1  
-$EndComp
-Connection ~ 5450 7400
-Wire Wire Line
-	5450 7400 5750 7400
 Wire Wire Line
 	3300 2600 3300 2700
 Wire Wire Line
@@ -1354,9 +1105,229 @@ CLOCK
 Wire Wire Line
 	8650 2750 8950 2750
 NoConn ~ 9450 1150
-Text Label 6500 2750 0    50   ~ 0
-K_CLK
 Wire Wire Line
 	6750 2750 6500 2750
 NoConn ~ 7250 1150
+$Comp
+L Device:C C1
+U 1 1 5D7D114E
+P 5200 7250
+F 0 "C1" H 5315 7296 50  0000 L CNN
+F 1 "100nF" H 5315 7205 50  0000 L CNN
+F 2 "Capacitor_THT:C_Rect_L4.0mm_W2.5mm_P2.50mm" H 5238 7100 50  0001 C CNN
+F 3 "~" H 5200 7250 50  0001 C CNN
+	1    5200 7250
+	1    0    0    -1  
+$EndComp
+Text Label 6500 2750 0    50   ~ 0
+IORQ
+Text Label 6500 1250 0    50   ~ 0
+MREQ
+$Comp
+L power:VCC #PWR012
+U 1 1 5D79D39A
+P 5450 7100
+F 0 "#PWR012" H 5450 6950 50  0001 C CNN
+F 1 "VCC" H 5467 7273 50  0000 C CNN
+F 2 "" H 5450 7100 50  0001 C CNN
+F 3 "" H 5450 7100 50  0001 C CNN
+	1    5450 7100
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR013
+U 1 1 5D79DFA9
+P 5450 7400
+F 0 "#PWR013" H 5450 7150 50  0001 C CNN
+F 1 "GND" H 5455 7227 50  0000 C CNN
+F 2 "" H 5450 7400 50  0001 C CNN
+F 3 "" H 5450 7400 50  0001 C CNN
+	1    5450 7400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5200 7400 5450 7400
+Connection ~ 5450 7400
+Wire Wire Line
+	5450 7400 5750 7400
+Wire Wire Line
+	5200 7100 5450 7100
+Connection ~ 5450 7100
+Wire Wire Line
+	5450 7100 5750 7100
+$Comp
+L Device:C C2
+U 1 1 5D7666C0
+P 5750 7250
+F 0 "C2" H 5865 7296 50  0000 L CNN
+F 1 "100nF" H 5865 7205 50  0000 L CNN
+F 2 "Capacitor_THT:C_Rect_L4.0mm_W2.5mm_P2.50mm" H 5788 7100 50  0001 C CNN
+F 3 "~" H 5750 7250 50  0001 C CNN
+	1    5750 7250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4950 6100 4700 6100
+Wire Wire Line
+	4950 6200 4700 6200
+NoConn ~ 2550 6200
+NoConn ~ 2550 6300
+NoConn ~ 2550 6400
+NoConn ~ 2550 6500
+NoConn ~ 2550 6600
+Wire Wire Line
+	1550 6600 1550 6700
+Connection ~ 1550 6600
+Wire Wire Line
+	1550 6500 1550 6600
+Connection ~ 1550 6500
+Wire Wire Line
+	1550 6400 1550 6500
+Connection ~ 1550 6400
+Wire Wire Line
+	1550 6300 1550 6400
+Connection ~ 1550 6300
+Connection ~ 1550 6700
+Wire Wire Line
+	1550 6200 1550 6300
+Wire Wire Line
+	1350 6100 1550 6100
+$Comp
+L 74xx:74LS244 U2
+U 1 1 5D18E79C
+P 4200 6600
+F 0 "U2" H 4000 7300 50  0000 C CNN
+F 1 "74LS244" H 4500 7300 50  0000 C CNN
+F 2 "Package_DIP:DIP-20_W7.62mm_Socket" H 4200 6600 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS244" H 4200 6600 50  0001 C CNN
+	1    4200 6600
+	1    0    0    -1  
+$EndComp
+Connection ~ 3700 7000
+Wire Wire Line
+	3700 7000 3700 7100
+Wire Wire Line
+	3700 6800 3700 7000
+Connection ~ 4200 7400
+Connection ~ 3700 6500
+Wire Wire Line
+	3700 6400 3700 6500
+Wire Wire Line
+	3700 6500 3700 6600
+Connection ~ 3700 6600
+Wire Wire Line
+	3700 6600 3700 6700
+Connection ~ 3700 6700
+Wire Wire Line
+	3700 6700 3700 6800
+Connection ~ 3700 6800
+Connection ~ 3700 7100
+Wire Wire Line
+	3700 7100 3700 7400
+Connection ~ 3700 6400
+Wire Wire Line
+	3700 6300 3700 6400
+Wire Wire Line
+	3700 7400 4200 7400
+$Comp
+L power:GND #PWR010
+U 1 1 5D1F81E2
+P 4200 7400
+F 0 "#PWR010" H 4200 7150 50  0001 C CNN
+F 1 "GND" H 4205 7227 50  0000 C CNN
+F 2 "" H 4200 7400 50  0001 C CNN
+F 3 "" H 4200 7400 50  0001 C CNN
+	1    4200 7400
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:VCC #PWR09
+U 1 1 5D318CE5
+P 4200 5800
+F 0 "#PWR09" H 4200 5650 50  0001 C CNN
+F 1 "VCC" H 4217 5973 50  0000 C CNN
+F 2 "" H 4200 5800 50  0001 C CNN
+F 3 "" H 4200 5800 50  0001 C CNN
+	1    4200 5800
+	1    0    0    -1  
+$EndComp
+Text Label 3500 6200 0    50   ~ 0
+IORQ
+NoConn ~ 4700 6300
+NoConn ~ 4700 6400
+NoConn ~ 4700 6500
+NoConn ~ 4700 6600
+NoConn ~ 4700 6700
+NoConn ~ 4700 6800
+$Comp
+L 74xx:74LS240 U1
+U 1 1 5D18AAA5
+P 2050 6600
+F 0 "U1" H 1850 7300 50  0000 C CNN
+F 1 "74LS240" H 2350 7300 50  0000 C CNN
+F 2 "Package_DIP:DIP-20_W7.62mm_Socket" H 2050 6600 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS240" H 2050 6600 50  0001 C CNN
+	1    2050 6600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1550 7000 1550 7100
+Wire Wire Line
+	1550 7400 2050 7400
+Connection ~ 1550 7100
+Wire Wire Line
+	1550 7100 1550 7400
+$Comp
+L power:GND #PWR04
+U 1 1 5D1F9234
+P 2050 7400
+F 0 "#PWR04" H 2050 7150 50  0001 C CNN
+F 1 "GND" H 2055 7227 50  0000 C CNN
+F 2 "" H 2050 7400 50  0001 C CNN
+F 3 "" H 2050 7400 50  0001 C CNN
+	1    2050 7400
+	1    0    0    -1  
+$EndComp
+Connection ~ 2050 7400
+$Comp
+L power:VCC #PWR03
+U 1 1 5D317ECF
+P 2050 5800
+F 0 "#PWR03" H 2050 5650 50  0001 C CNN
+F 1 "VCC" H 2067 5973 50  0000 C CNN
+F 2 "" H 2050 5800 50  0001 C CNN
+F 3 "" H 2050 5800 50  0001 C CNN
+	1    2050 5800
+	1    0    0    -1  
+$EndComp
+Text Label 1350 6100 0    50   ~ 0
+WR
+Text Label 4950 6200 2    50   ~ 0
+XIORQ
+Text Label 4950 6100 2    50   ~ 0
+XWR
+Wire Wire Line
+	1550 6700 1550 6800
+Connection ~ 1550 7000
+Connection ~ 1550 6800
+Wire Wire Line
+	1550 6800 1550 7000
+NoConn ~ 2550 6700
+NoConn ~ 2550 6800
+Wire Wire Line
+	6750 3050 6550 3050
+Text Notes 4250 7800 2    75   ~ 15
+TIMING DELAY FOR TRACING BUS CYCLES
+Text Notes 6400 1250 2    50   ~ 0
+J_CLK
+Text Notes 6150 2750 0    50   ~ 0
+K_CLK
+Wire Wire Line
+	7350 2950 7250 2950
+Wire Wire Line
+	2550 6100 3700 6100
+Wire Wire Line
+	3700 6200 3500 6200
+Text Notes 5700 7800 2    75   ~ 15
+BYPASS
 $EndSCHEMATC
