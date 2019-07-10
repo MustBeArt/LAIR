@@ -180,7 +180,7 @@ HP's adapter ran MREQ and IORQ through an inverter and used both of them to cloc
 
 The WR signal is not valid at those edges. HP's adapter corrects this problem by running WR through three inverters. We need one fewer gate delay, so we use one inverter and one non-inverting buffer.
 
-The analyzer is being clocked by both MREQ and IORQ, but it does not automatically keep track of which clock source latched a particular state. In order to find out, we have to delay the clock source (so it remains valid through the transition) and capture it as a state input. HP's adapter runs IORQ through two inverters. We need one fewer gate delay, so we use on non-inverting buffer. We don't need a delayed version of MREQ, because if the state capture wasn't clocked by IORQ, we know it was clocked by MREQ.
+The analyzer is being clocked by both MREQ and IORQ, but it does not automatically keep track of which clock source latched a particular state. In order to find out, we have to delay the clock source (so it remains valid through the transition) and capture it as a state input. HP's adapter runs IORQ through two inverters. We need one fewer gate delay, so we use one non-inverting buffer. We don't need a delayed version of MREQ, because if the state capture wasn't clocked by IORQ, we know it was clocked by MREQ.
 
 For most debug purposes, we don't care to see DRAM refresh cycles. Unless there's a fundamental hardware problem, the DRAM refresh doesn't have anything to do with the flow of program execution. It would be ideal if we could just discard those cycles without storing them. In order to do that on the HP logic analyzer, we need to use a clock qualifying input, and the only signals that can qualify the clocks are other clock inputs. So we connect RFSH to the third clock input ```L```. If we program the analyzer's clock to react to ```J``` (MREQ) or ```K``` only if ```L``` is not active, we don't capture DRAM refresh cycles. If we turn off ```L``` as a clock qualifier, we do capture DRAM refresh cycles, and we can recognize them because we also have RFSH as a captured signal.
 
@@ -202,8 +202,26 @@ Unfortunately, there's no way to enter the inverse assembler manually. You'll ha
 
 After you load the configuration (either ```lair_v1._a``` or one your created), check the listing screen and see if the DATA column has been replaced by an inverse assembler column. If not, you'll need to load the inverse assembler manually. Go back to the Hard Drive screen and LOAD to the ANALYZER from the file ```iz80_i```. Check the listing screen again; it should now be displaying the inverse assembler. If you now save your configuration, the inverse assembler should load automatically next time.
 
+## Use with RC-2014 Pro Backplane
+
+LAIR Pro is designed for use with the Pro Backplane. Plug LAIR&nbsp;Pro into a slot that has the Enhanced Bus connector installed.
+
+The Pro Backplane kit ships with enough 40-pin female headers to populate the Standard Bus on every slot. However, it only ships with a limited number of female headers for the Enhanced Bus, and those connectors are only 20 pins long, which doesn't give access to the four USER pins on the Enhanced Bus connector. You can add Enhanced Bus connectors to the slots that have none, and I suggest you use 24-pin headers. Then you'll need to arrange to have all the modules that use the Enhanced Bus USER pins plugged into these fully populated slots. That includes the LAIR&nbsp;Pro, if you wish to trace the Enhanced Bus USER pins on the logic analyzer.
+
+If you want to go back and add the USER pins to the slots that already have 20-pin connectors on the Enhanced Bus, you'll run into a problem. You can't add female headers next to existing female headers without skipping a pin, because the plastic housings collide. If you're comfortable desoldering, you can remove the existing 20-pin female headers and install new 24-pin ones. That's what I did.
+
 ## Use with non-Pro Backplane
 
 If your RC-2014 doesn't support the Enhanced Bus from the RC-2014 Backplane Pro, you can still use LAIR&nbsp;Pro. If you don't need to use the inverse assembler, no special steps are necessary. Of course, you won't see any information on any of the signals from the Enhanced Bus. You won't need Pod&nbsp;3 or Pod&nbsp;4.
 
-In order to run the inverse assembler, you'll need to hook up the RFSH signal. Use the regular individual wires connector on Pod&nbsp;3 (not the termination adapter). Connect the ground wire to a convenient ground on your RC-2014. Connect the ```L``` clock wire to the RFSH signal on your Z80. If your Z80 board has the Enhanced Bus, you can clip it to pin 19 on the Enhanced Bus connector. Otherwise, you can clip it onto the RFSH/ signal right on the Z80 chip (pin 28 on the usual DIP package).
+In order to run the inverse assembler, you'll need to hook up the RFSH signal. Use the regular individual wires connector on Pod&nbsp;3 (not the termination adapter). Connect the ground wire to a convenient ground on your RC-2014. Connect the ```L``` clock wire to the RFSH signal on your Z80. If your Z80 CPU board has the Enhanced Bus, you can clip onto pin 19 on the Enhanced Bus connector. Otherwise, you can clip directly onto the RFSH/ signal right on the Z80 chip (pin 28 on the usual DIP package).
+
+## Construction
+
+If you've already built your RC-2014, assembling the LAIR-Pro will present few new mysteries.
+
+LAIR Pro has two sets of holes for the RC-2014 Pro bus. Install the usual right-angle dual-row header at the bottom, nearest the edge of the board. The other set of holes is right above that, and is intended to make it easier to connect random probe wires to bus signals. Install straight headers in that set of holes. You can use dual-row male headers or two single-row headers. If you don't think you'll ever want to use these headers for probing, it's perfectly OK to leave them out.
+
+See [Preparing Enhanced Bus Connectors](http://rc2014.co.uk/1426/preparing-enhanced-bus-connectors/) for good advice on installing the right-angle bus connector. Go ahead and remove the first 16 pins as suggested, but don't remove any pins from the other end; LAIR&nbsp;Pro even has room for pin 40.
+
+The [Agilent manual for the Isolation Adapter](HP1670G/manuals/Agilent%20100kOhm%20Isolation%20Adapter.pdf) specifies part numbers from Agilent and from 3M for the mating connector. These part numbers are so obsolete I wasn't even able to find specifications on them. However, the part required is a perfectly ordinary 20-pin dual-row shrouded male header (thank you, HP engineers). I ordered Samtec TST-110-01-G-D ([catalog page](http://suddendocs.samtec.com/catalog_english/tst_th.pdf)) and they work fine. Any other vendor's similar connector would probably work, too. I don't recommend using unshrouded male headers, though they would work. The shrouds help support the weight of the termination adapter and pod cables, and they make it impossible to plug them in backwards or off-by-one.
