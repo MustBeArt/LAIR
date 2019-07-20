@@ -2,7 +2,11 @@
 
 LAIR is an interface that makes it easy to connect a logic analyzer to the backplane bus of a [RC-2014](https://rc2014.co.uk) Z80-based retro computer. The logic analyzer can capture all activity on the bus and make it available for analysis, without changing the behavior or timing of the RC-2014 system in any way.
 
-(picture here when hardware is available)
+![LAIR Rev 1 Front View](hardware/photo/LAIR-Rev1-Front.jpg)
+
+![LAIR Rev 1 Back View](hardware/photo/LAIR-Rev1-Back.jpg)
+
+![LAIR Rev 1 Kit](hardware/photo/LAIR-Rev1-Kit.jpg)
 
 The LAIR module plugs into the RC-2014 [Backplane&nbsp;Pro](https://rc2014.co.uk/modules/backplane-pro/), which includes the standard RC-2014 bus and the enhanced RC-2014 bus. It connects all the pins that are present on the Backplane&nbsp;Pro circuit board. All these pins are also brought out to a second set of pins to make it easy to probe the bus.
 
