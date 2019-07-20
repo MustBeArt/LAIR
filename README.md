@@ -12,7 +12,7 @@ Besides simply wiring up signals from the bus connector to the probe connectors,
 
 The circuit board was designed using [KiCad EDA](http://www.kicad-pcb.org) and all the design files are included (in the ```hardware``` directory). The ```HP1670G``` directory contains a complete setup for that logic analyzer, including all the RC-2014 bus signals and the HP inverse assembler.
 
-[Schematic of Rev 1 LAIR-Pro module](hardware/LAIR%20Pro%20Rev%201%20module/LAIR-Pro-Rev1-Schematic.pdf) (pdf)
+[Schematic of Rev 2 LAIR-Pro module](hardware/LAIR%20Pro%20Rev%202%20module/LAIR-Pro-Rev2-Schematic.pdf) (pdf)
 
 ## Why a Logic Analyzer?
 There are many approaches to debugging programs running on a Z80-based computer such as the RC-2014, but most of them are invasive to some extent. For instance, a debug monitor program can trace execution, but very slowly. Rob Dobson's [BusRaider](https://github.com/robdobsn/PiBusRaider) hardware can theoretically trace every bus access made by the Z80, but still at greatly reduced execution speed. Simulation environments like Alan Cox's [RC2014 Emulator](https://github.com/EtchedPixels/RC2014.git) can trace execution in great detail, not limited by retro hardware speeds, but not on actual hardware. Sometimes there is just no substitute for non-invasive realtime tracing on the actual hardware.
@@ -38,7 +38,7 @@ As I write in 2019, the termination adapters are readily available on eBay. The 
 
 Simply plug four termination adapters onto the ends of the ribbon cables for pods 1 through 4, and plug the other end of each termination adapter into the corresponding marked port on the LAIR&nbsp;Pro module. Plug the LAIR&nbsp;Pro module into the RC-2014 Pro Backplane (near one end so there's room for the termination adapters). Load the provided logic analyzer setup file to map all the signals to named labels according to LAIR's scheme. If your logic analyzer is not compatible with the provided setup file, refer to the tables below for signal assignments.
 
-In order to use the inverse assembler, the address bus must be labeled ```ADDR``` and the data bus must be labeled ```DATA```. You also need a label ```STAT``` that contains (in most-significant to least-significant order) the signals ```XWR```, ```XIORQ```, ```RFSH```, and ```M1```. The ```J``` and ```K``` clocks must be connected to ```MREQ``` and ```IORQ```, and the ```L``` clock must be connected to RFSH. If you're able to use the provided setup file, all this is taken care of for you. The ```M``` clock is not used by the inverse assembler or by the standard LAIR&nbsp;Pro setup.
+In order to use the inverse assembler, the address bus must be labeled ```ADDR``` and the data bus must be labeled ```DATA```. You also need a label ```STAT``` that contains (in most-significant to least-significant order) the signals ```XWR```, ```XIORQ```, ```RFSH```, and ```XM1```. The ```J``` and ```K``` clocks must be connected to ```MREQ``` and ```IORQ```, and the ```L``` clock must be connected to RFSH. If you're able to use the provided setup file, all this is taken care of for you. The ```M``` clock is not used by the inverse assembler or by the standard LAIR&nbsp;Pro setup.
 
 The pin assignments are designed so that you can trace basic bus activity with only pods 1 and 2. However, the inverse assembler depends on the ```L``` clock input which appears on pod&nbsp;3.
 
@@ -72,18 +72,18 @@ Rising edges on the ```J``` clock input on Pod&nbsp;1 are used to detect memory 
 ### Pod 2 Signal Assignments
 |Pod Signal|RC-2014 Pin|Signal Name|Description                          |
 |----------|-----------|-----------|-------------------------------------|
-|     0    |  Main 34  |    D0     | Data bus (least significant bit)    |
-|     1    |  Main 33  |    D1     | Data bus                            |
-|     2    |  Main 32  |    D2     | Data bus                            |
-|     3    |  Main 31  |    D3     | Data bus                            |
-|     4    |  Main 30  |    D4     | Data bus                            |
-|     5    |  Main 29  |    D5     | Data bus                            |
-|     6    |  Main 28  |    D6     | Data bus                            |
-|     7    |  Main 27  |    D7     | Data bus (most significant bit)     |
+|     0    |  Main 27  |    D0     | Data bus (least significant bit)    |
+|     1    |  Main 28  |    D1     | Data bus                            |
+|     2    |  Main 29  |    D2     | Data bus                            |
+|     3    |  Main 30  |    D3     | Data bus                            |
+|     4    |  Main 31  |    D4     | Data bus                            |
+|     5    |  Main 32  |    D5     | Data bus                            |
+|     6    |  Main 33  |    D6     | Data bus                            |
+|     7    |  Main 34  |    D7     | Data bus (most significant bit)     |
 |     8    |   N/A     |    XWR    | Delayed, inverted version of Z80 WR |
 |     9    |   N/A     |   XIORQ   | Delayed version of Z80 IORQ         |
 |    10    |   Enh 19  |   RFSH    | Z80 RFSH, refresh request           |
-|    11    |  Main 19  |    M1     | Z80 M1, opcode fetch or int ack     |
+|    11    |   N/A     |    XM1    | Delayed version of Z80 M1           |
 |    12    |  Main 25  |    RD     | Z80 RD, read enable                 |
 |    13    |  Main 23  |   MREQ    | Z80 MREQ, memory request            |
 |    14    |  Main 22  |    INT    | Z80 INT, interrupt request          |
@@ -178,7 +178,7 @@ Ideally, we would follow their lead exactly, so as to achieve the same performan
 
 HP's adapter ran MREQ and IORQ through an inverter and used both of them to clock the state analyzer. We can't do the same, since the other signals aren't delayed. We use MREQ and IORQ directly as ```J``` and ```K``` clock inputs. This doesn't hurt compatibility with the inverse assembler, but it does mean that the logic analyzer's Master Clock has to be configured to detect _rising_ edges on ```J``` or ```K``` instead of falling edges.
 
-The WR signal is not valid at those edges. HP's adapter corrects this problem by running WR through three inverters. We need one fewer gate delay, so we use one inverter and one non-inverting buffer.
+The WR signal is not valid at those edges. HP's adapter corrects this problem by running WR through three inverters. We need one fewer gate delay, so we use one inverter and one non-inverting buffer. Likewise, M1 is not quite valid at those edges. HP's adapter, at least according to the description I received, does not address this issue, but we add a non-inverting buffer.
 
 The analyzer is being clocked by both MREQ and IORQ, but it does not automatically keep track of which clock source latched a particular state. In order to find out, we have to delay the clock source (so it remains valid through the transition) and capture it as a state input. HP's adapter runs IORQ through two inverters. We need one fewer gate delay, so we use one non-inverting buffer. We don't need a delayed version of MREQ, because if the state capture wasn't clocked by IORQ, we know it was clocked by MREQ.
 
@@ -200,7 +200,7 @@ If you can't load the configuration from ```lair_v1._a```, you can enter the con
 
 Unfortunately, there's no way to enter the inverse assembler manually. You'll have to get one of the file transfer methods working in order to use it.
 
-After you load the configuration (either ```lair_v1._a``` or one your created), check the listing screen and see if the DATA column has been replaced by an inverse assembler column. If not, you'll need to load the inverse assembler manually. Go back to the Hard Drive screen and LOAD to the ANALYZER from the file ```iz80_i```. Check the listing screen again; it should now be displaying the inverse assembler. If you now save your configuration, the inverse assembler should load automatically next time.
+After you load the configuration (either ```lair_v1._a``` or one you created), check the listing screen and see if the DATA column has been replaced by an inverse assembler column. If not, you'll need to load the inverse assembler manually. Go back to the Hard Drive screen and LOAD to the ANALYZER from the file ```iz80_i```. Check the listing screen again; it should now be displaying the inverse assembler. If you now save your configuration, the inverse assembler should load automatically next time.
 
 ## Use with RC-2014 Pro Backplane
 
@@ -212,7 +212,7 @@ If you want to go back and add the USER pins to the slots that already have 20-p
 
 ## Use with non-Pro Backplane
 
-If your RC-2014 doesn't support the Enhanced Bus from the RC-2014 Backplane Pro, you can still use LAIR&nbsp;Pro. If you don't need to use the inverse assembler, no special steps are necessary. Of course, you won't see any information on any of the signals from the Enhanced Bus. You won't need Pod&nbsp;3 or Pod&nbsp;4.
+If your RC-2014 doesn't support the Enhanced Bus from the RC-2014 Backplane Pro, you can still use LAIR&nbsp;Pro. If you don't need to use the inverse assembler, no special steps are necessary. Of course, you won't see any information on any of the signals from the Enhanced Bus.
 
 In order to run the inverse assembler, you'll need to hook up the RFSH signal. Use the regular individual wires connector on Pod&nbsp;3 (not the termination adapter). Connect the ground wire to a convenient ground on your RC-2014. Connect the ```L``` clock wire to the RFSH signal on your Z80. If your Z80 CPU board has the Enhanced Bus, you can clip onto pin 19 on the Enhanced Bus connector. Otherwise, you can clip directly onto the RFSH/ signal right on the Z80 chip (pin 28 on the usual DIP package).
 
