@@ -29,7 +29,7 @@ There were even software packages you could install on the logic analyzer to dis
 
 HP also made available a Symbol Utility which runs on the logic analyzer and can understand symbols from object files created in several specific object module formats (OMF) that are output by compilers and assemblers. It can also understand a general-purpose ASCII plain text (GPA) format that could be created by hand or by ad hoc tools. The Symbol Utility reads the symbols from these files into a file-based database within the logic analyzer. These symbols are then used in the inverse assembly display and optionally as a column format in the listing view on the logic analyzer's screen.
 
-(picture of a trace with inverse assembly here)
+![Inverse Assembler Listing Screen](media/inv-assembler.jpg)
 
 Even with the inverse assembler and symbol translation, the display on the logic analyzer is fairly primitive. It is also possible to transfer the captured data to a file on an external computer and annotate the traced execution with text from the source code, or from a more sophisticated disassembly listing produced by a reverse engineering tool. The software to do that remains unwritten at this time.
 
