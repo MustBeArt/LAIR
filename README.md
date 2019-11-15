@@ -16,7 +16,7 @@ Besides simply wiring up signals from the bus connector to the probe connectors,
 
 The circuit board was designed using [KiCad EDA](http://www.kicad-pcb.org) and all the design files are included (in the ```hardware``` directory). The ```HP1670G``` directory contains a complete setup for that logic analyzer, including all the RC-2014 bus signals and the HP inverse assembler.
 
-[Schematic of Rev 2 LAIR-Pro module](hardware/LAIR%20Pro%20Rev%202%20module/LAIR-Pro-Rev2-Schematic.pdf) (pdf) NOTE: this schematic has not been reduced to a circuit board design yet. It has only been tested by making modifications to a Rev 1 circuit board, and not comprehensively tested at that.
+[Schematic of Rev 2 LAIR-Pro module](hardware/LAIR%20Pro%20Rev%202%20module/LAIR-Pro-Rev2-Schematic.pdf) (pdf) NOTE: this schematic has not been reduced to a physical circuit board yet. It has only been tested by making modifications to a Rev 1 circuit board, and not comprehensively tested at that.
 
 ## Why a Logic Analyzer?
 There are many approaches to debugging programs running on a Z80-based computer such as the RC-2014, but most of them are invasive to some extent. For instance, a debug monitor program can trace execution, but very slowly. Rob Dobson's [BusRaider](https://github.com/robdobsn/PiBusRaider) hardware can theoretically trace every bus access made by the Z80, but still at greatly reduced execution speed. Simulation environments like Alan Cox's [RC2014 Emulator](https://github.com/EtchedPixels/RC2014.git) can trace execution in great detail, not limited by retro hardware speeds, but not on actual hardware. Sometimes there is just no substitute for non-invasive realtime tracing on the actual hardware.
