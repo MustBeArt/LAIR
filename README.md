@@ -16,7 +16,7 @@ Besides simply wiring up signals from the bus connector to the probe connectors,
 
 The circuit board was designed using [KiCad EDA](http://www.kicad-pcb.org) and all the design files are included (in the ```hardware``` directory). The ```HP1670G``` directory contains a complete setup for that logic analyzer, including all the RC-2014 bus signals and the HP inverse assembler.
 
-[Schematic of Rev 2 LAIR-Pro module](hardware/LAIR%20Pro%20Rev%202%20module/LAIR-Pro-Rev2-Schematic.pdf) (pdf)
+[Schematic of Rev 2 LAIR-Pro module](hardware/LAIR%20Pro%20Rev%202%20module/LAIR-Pro-Rev2-Schematic.pdf) (pdf) NOTE: this schematic has not been reduced to a circuit board design yet. It has only been tested by making modifications to a Rev 1 circuit board, and not comprehensively tested at that.
 
 ## Why a Logic Analyzer?
 There are many approaches to debugging programs running on a Z80-based computer such as the RC-2014, but most of them are invasive to some extent. For instance, a debug monitor program can trace execution, but very slowly. Rob Dobson's [BusRaider](https://github.com/robdobsn/PiBusRaider) hardware can theoretically trace every bus access made by the Z80, but still at greatly reduced execution speed. Simulation environments like Alan Cox's [RC2014 Emulator](https://github.com/EtchedPixels/RC2014.git) can trace execution in great detail, not limited by retro hardware speeds, but not on actual hardware. Sometimes there is just no substitute for non-invasive realtime tracing on the actual hardware.
@@ -229,3 +229,9 @@ LAIR Pro has two sets of holes for the RC-2014 Pro bus. Install the usual right-
 See [Preparing Enhanced Bus Connectors](http://rc2014.co.uk/1426/preparing-enhanced-bus-connectors/) for good advice on installing the right-angle bus connector. Go ahead and remove the first 16 pins as suggested, but don't remove any pins from the other end; LAIR&nbsp;Pro even has room for pin 40.
 
 The [Agilent manual for the Isolation Adapter](HP1670G/manuals/Agilent%20100kOhm%20Isolation%20Adapter.pdf) specifies part numbers from Agilent and from 3M for the mating connector. These part numbers are so obsolete I wasn't even able to find specifications on them. However, the part required is a perfectly ordinary 20-pin dual-row shrouded male header (thank you, HP engineers). I ordered Samtec TST-110-01-G-D ([catalog page](http://suddendocs.samtec.com/catalog_english/tst_th.pdf)) and they work fine. Any other vendor's similar connector would probably work, too. I don't recommend using unshrouded male headers, though they would work. The shrouds help support the weight of the termination adapter and pod cables, and they make it impossible to plug them in backwards or off-by-one.
+
+## Availability
+
+If you want a LAIR Pro right now, you'll have to build it from scratch. You can start with the Rev 2 design files in the hardware directory, output Gerbers, and order from your favorite PCB manufacturer. Then you'll have to find the connectors and other parts. You can do it! If you have never had a board made before, you'll find the experience educational.
+
+If there is interest from the community, I can put together LAIR Pro kits. Please let me know if you are interested in a LAIR Pro kit.
