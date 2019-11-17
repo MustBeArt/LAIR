@@ -38,7 +38,7 @@ The worst part about using a logic analyzer is hooking up all the individual fid
 
 As I write in 2019, the termination adapters are readily available on eBay. The HP 01650-63203 Termination Adapter has a standard 20-pin dual-row female pin header connector, carrying one ground connection, sixteen signal connections, two clock signal connections (though the pods have at most one clock input), and a +5V power output that should not be used. The LAIR&nbsp;Pro has four of the mating shrouded sockets.
 
-(picture of hookup here)
+![Logic Analyzer Hookup](media/hookup.jpg)
 
 Simply plug four termination adapters onto the ends of the ribbon cables for pods 1 through 4, and plug the other end of each termination adapter into the corresponding marked port on the LAIR&nbsp;Pro module. Plug the LAIR&nbsp;Pro module into the RC-2014 Pro Backplane (near one end so there's room for the termination adapters). Load the provided logic analyzer setup file to map all the signals to named labels according to LAIR's scheme. If your logic analyzer is not compatible with the provided setup file, refer to the tables below for signal assignments.
 
