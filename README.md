@@ -31,7 +31,7 @@ There were even software packages you could install on the logic analyzer to dis
 
 Here's a video on YouTube showing the basic logic analyzer startup procedure:
 
-[![LAIR Pro Basic Demo video](https://img.youtube.com/vi/011vcvdKTC8/0.jpg)](https://www.youtube.com/watch?v=011vcvdKTC8)
+[https://www.youtube.com/watch?v=011vcvdKTC8](https://www.youtube.com/watch?v=011vcvdKTC8)
 
 HP also made available a Symbol Utility which runs on the logic analyzer and can understand symbols from object files created in several specific object module formats (OMF) that are output by compilers and assemblers. It can also understand a general-purpose ASCII plain text (GPA) format that could be created by hand or by ad hoc tools. The Symbol Utility reads the symbols from these files into a file-based database within the logic analyzer. These symbols are then used in the inverse assembly display and optionally as a column format in the listing view on the logic analyzer's screen.
 
