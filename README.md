@@ -14,7 +14,7 @@ The LAIR module is compatible with a range of HP (later Agilent, currently Keysi
 
 Besides simply wiring up signals from the bus connector to the probe connectors, LAIR has a bit of circuitry to condition the bus signals. This circuitry is modeled after the circuitry used in the HP Model 64683A Interface Module Z80, and makes it easy for the logic analyzer to accurately trace each bus cycle. With the addition of an available "inverse assembler" file, the logic analyzer can capture and display Z80 instruction cycles in standard mnemonic assembler format.
 
-The circuit board was designed using [KiCad EDA](http://www.kicad-pcb.org) and all the design files are included (in the ```hardware``` directory). The ```HP1670G``` directory contains a complete setup for that logic analyzer, including all the RC-2014 bus signals and the HP inverse assembler.
+The circuit board was designed using [KiCad EDA](http://www.kicad.org) and all the design files are included (in the ```hardware``` directory). The ```HP1670G``` directory contains a complete setup for that logic analyzer, including all the RC-2014 bus signals and the HP inverse assembler.
 
 [Schematic of Rev 2 LAIR-Pro module](hardware/LAIR%20Pro%20Rev%202%20module/LAIR-Pro-Rev2-Schematic.pdf) (pdf) NOTE: this schematic has not been reduced to a physical circuit board yet. It has only been tested by making modifications to a Rev 1 circuit board, and not comprehensively tested at that.
 
